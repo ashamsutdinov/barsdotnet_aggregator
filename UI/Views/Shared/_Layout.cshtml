@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="/Scripts/extjs/resources/css/ext-all.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet"/>
     @Styles.Render("~/css/site")
     @Scripts.Render("~/js/modernizr")
 </head>
@@ -13,5 +14,57 @@
     @RenderBody()
     @Scripts.Render("~/js/extjs")
     @RenderSection("scripts", required: false)
+    
+    <table border="1" class="main">
+        <tbody>
+            <tr>
+                <td class="top" colspan="2">
+                    <table class="main">
+                        <tbody>
+                            <tr>
+                                <td class="logo"><img width="150" height="120" border="0" src="/Content/logo.gif" alt="" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="search">
+                    <form action="">
+                        <table class="main">
+                            <tr>
+                                <td class="searchitem hdr">Search</td>
+                                <td class="searchitem" width="100%">
+                                    <input type="text" name="Search" style="width:100%;">
+                                </td>
+                                <td class="searchitem">
+                                    <input type="image" src="/Content/button.jpg" width="22" height="39" border="0">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+                <td class="topmenu">
+                    <table class="main">
+                        <tr>
+                            <td class="menuitem"><a class="menu" href="Settings">Настройки</a></td>
+                            <td class="menuitem"><a class="menu" href="Login">Вход</a></td>
+                            <td class="menuitem"><a class="menu" href="Register">Регистрация</a></td>
+                            <td class="menuitem"><a class="menu" href="AddBlog">Подписаться на микроблог</a></td>
+                            <td class="menuitem"><a class="menu" href="UnsignFrom">Отписаться от</a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="news">news</td>
+                <td class="text">@ViewBag.Text</td>
+            </tr>
+            <tr>
+                <td class="copyright">copyright</td>
+                <td class="bottommenu">bottommenu</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

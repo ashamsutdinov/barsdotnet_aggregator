@@ -8,5 +8,17 @@ namespace UI.Controllers
         {
             return View();
         }
+        public ActionResult Login()
+        {
+            return PartialView();
+        }
+        
+        public ActionResult LoginProcess()
+        {
+
+           
+            ViewBag.Text = "qwerty";
+           return View();
+        }
     }
 }
