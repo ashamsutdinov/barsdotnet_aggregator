@@ -10,14 +10,17 @@ namespace UI.Controllers
         }
         public ActionResult Login()
         {
-            return PartialView();
+            return View();
         }
-        
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         public ActionResult LoginProcess()
         {
-
-           
-            ViewBag.Text = "qwerty";
+           ViewBag.Text = "qwerty";
            return View();
         }
     }

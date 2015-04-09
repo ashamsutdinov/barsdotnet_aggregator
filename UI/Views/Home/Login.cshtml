@@ -1,14 +1,48 @@
-﻿<title>Вход</title>
+﻿@{
+    Layout = "~/Views/Shared/_SignInLayout.cshtml";
+    ViewBag.Title = "Вход";
+}
 
-<body>
-    <form name="f1" method="post" action="LoginProcess">
-        <input name="link" type="hidden" value="" />
-        Логин: <br />
-        <input name="login" type="text" size="25" maxlength="30" value="" /> <br />
-        Пароль: <br />
-        <input name="password" type="text" size="25" maxlength="30" value="" /> <br />
-        <input name="remember" type="checkbox" value="yes" /> Запомнить <br />
-        <input type="submit" name="enter" value="Вход" />
-    </form>
-</body>
-</html>
+@section scripts
+{
+    <script>
+        Ext.onReady(function () {
+            var formPanel = Ext.create('Ext.form.Panel', {
+                xtype: 'form-login',
+                title: 'Авторизация',
+                width: 280,
+                bodyPadding: 10,
+                renderTo: Ext.getBody(),
+                margin:20,
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: 'Логин',
+                    name: 'login'
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Пароль',
+                    name: 'password',
+                    inputType: 'password'
+                }, {
+                    xtype: 'checkbox',
+                    fieldLabel: 'Запомнить пароль',
+                    name: 'remember'
+                }, {
+                    xtype: 'label',
+                    html: ['<a href="#">Забыли пароль?</a>'],
+                    padding:'5 5 5 105'
+                }],
+                
+                // кнопки формы
+                buttons: [{
+                    text: 'Войти',
+                    handler: function () {
+                        // действие входа
+                    }
+                }
+                ]
+            });
+        });
+    </script>
+}
+

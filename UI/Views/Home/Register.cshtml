@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "~/Views/Shared/_SignInLayout.cshtml";
+}
+
+@section scripts
+{
+    <script>
+        Ext.onReady(function () {
+            var formPanel = Ext.create('Ext.form.Panel', {
+                title: 'Регистрация',
+                width: 350,
+                bodyPadding: 10,
+                renderTo: Ext.getBody(),
+                margin: 20,
+                layout: 'form',
+                defaults: {
+                    labelWidth: 130
+                },
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: 'Выберите логин',
+                    name: 'login',
+                    allowBlank: false
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Пароль',
+                    name: 'password',
+                    inputType: 'password',
+                    allowBlank: false
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Подтвердить пароль',
+                    name: 'password2',
+                    inputType: 'password',
+                    allowBlank: false
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Ваш e-mail',
+                    name: 'e-mail',
+                    vtype: 'email'
+                }, {
+                    xtype: 'label',
+                    text: 'Какие микроблоги будем отслеживать?'
+                }, {
+                    xtype: 'checkbox',
+                    boxLabel: 'Twitter',
+                    name: 'twit',
+                    checked:true
+                }, {
+                    xtype: 'checkbox',
+                    boxLabel: 'rss',
+                    name: 'rss'
+                }],
+
+                buttons: [{
+                    text: 'Зарегистрироваться',
+                    handler: function () {
+                    }
+                }
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+

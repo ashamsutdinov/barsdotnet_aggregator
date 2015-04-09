@@ -11,10 +11,7 @@
     @Scripts.Render("~/js/modernizr")
 </head>
 <body>
-    @RenderBody()
-    @Scripts.Render("~/js/extjs")
-    @RenderSection("scripts", required: false)
-    
+    @RenderBody()    
     <table border="1" class="main">
         <tbody>
             <tr>
@@ -48,8 +45,8 @@
                     <table class="main">
                         <tr>
                             <td class="menuitem"><a class="menu" href="Settings">Настройки</a></td>
-                            <td class="menuitem"><a class="menu" href="Login">Вход</a></td>
-                            <td class="menuitem"><a class="menu" href="Register">Регистрация</a></td>
+                            <td class="menuitem"><a class="menu" href="/Home/Login">Вход</a></td>
+                            <td class="menuitem"><a class="menu" href="/Home/Register">Регистрация</a></td>
                             <td class="menuitem"><a class="menu" href="AddBlog">Подписаться на микроблог</a></td>
                             <td class="menuitem"><a class="menu" href="UnsignFrom">Отписаться от</a></td>
                         </tr>
@@ -66,5 +63,8 @@
             </tr>
         </tbody>
     </table>
+
+    @Scripts.Render("~/js/extjs")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
