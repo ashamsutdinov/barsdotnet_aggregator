@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Aggregator.Contracts;
 
 namespace UI
 {
@@ -16,8 +16,11 @@ namespace UI
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
 
+            Services.Factory = new UnityServiceFactory();
+            Services.Factory.Get<IDatabaseManager>().Initialize();
+
+            AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
