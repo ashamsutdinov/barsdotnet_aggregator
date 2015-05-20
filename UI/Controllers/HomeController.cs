@@ -11,7 +11,7 @@ namespace UI.Controllers
             var userManager = Services.Factory.Get<IUserManager>();
             userManager.Register("login", "password");
             IUser user = userManager.CheckAndGet("login", "password");
-
+            
             return View();
         }
         public ActionResult Login()
