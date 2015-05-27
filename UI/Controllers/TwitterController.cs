@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using TweetSharp;
 using Newtonsoft.Json;
+using UI.Models;
 namespace MvcSample.Controllers
 {
     public class TwitterController :
@@ -34,7 +35,9 @@ namespace MvcSample.Controllers
             Session["oauth_token"] = oauth_token;
             Session["access_token"] = accessToken.Token;
             Session["access_secret"] = accessToken.TokenSecret;
-            return Content(string.Format("Your username is {0}", user.ScreenName));
+
+            return TimeLine(user.ScreenName);
+            //return Content(string.Format("Your username is {0}", user.ScreenName));
         }
 
         public ActionResult TimeLine(string id)
@@ -43,21 +46,38 @@ namespace MvcSample.Controllers
             service.AuthenticateWith(Session["access_token"].ToString(), Session["access_secret"].ToString());
             var result = service.ListTweetsOnHomeTimeline(new ListTweetsOnHomeTimelineOptions()
             {
-                Count = 100,
+                Count = 10,
             });
+
+            TwitterUserModel model = new TwitterUserModel();
+            model.Name = "Test";
+            model.feed = new System.Collections.Generic.List<TwitterUserModel.Tweet>();
+            
+
             string s = "";
             foreach (var r in result)
             {
-                s += "<br>" +
-                    "<img src=\"" + r.Author.ProfileImageUrl + "\" width=\"50\" height=\"50\">"
-                    + r.Author.ScreenName + ":   " + r.TextAsHtml + "</br>";
+                TwitterUserModel.Tweet tweet = new TwitterUserModel.Tweet();
+                tweet.AuthorScreenName = r.Author.ScreenName;
+                tweet.AuthorProfileImageUrl = r.Author.ProfileImageUrl;
+                tweet.TextAsHtml = r.TextAsHtml;
+
+                /*    s += "<br>" +
+                        "<img src=\"" + r.Author.ProfileImageUrl + "\" width=\"50\" height=\"50\">"
+                        + r.Author.ScreenName + ":   " + r.TextAsHtml + "</br>";
+                */
+                string images = "";
                 foreach (var m in r.Entities.Media)
                 {
-                    s += "<img src=\"" + m.MediaUrl + "\" >";
+                    images += m.MediaUrl;
                 }
-            }
+                tweet.Image = images;
+                //  s += images;
 
-            return Content(s);//Json(result, JsonRequestBehavior.AllowGet);
+                model.feed.Add(tweet);
+            }
+            return View("~/Views/Home/Index.cshtml", model);
+            //return Content(s);//Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

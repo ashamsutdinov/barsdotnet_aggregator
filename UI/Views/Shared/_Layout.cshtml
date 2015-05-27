@@ -11,7 +11,7 @@
     @Scripts.Render("~/js/modernizr")
 </head>
 <body>
-    @RenderBody()    
+     
     <table border="1" class="main">
         <tbody>
             <tr>
@@ -55,7 +55,7 @@
             </tr>
             <tr>
                 <td class="news">news</td>
-                <td class="text">@ViewBag.Text</td>
+                <td class="text">@RenderBody()</td>
             </tr>
             <tr>
                 <td class="copyright">copyright</td>
