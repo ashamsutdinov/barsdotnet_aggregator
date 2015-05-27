@@ -1,28 +1,9 @@
-﻿@model UI.Models.TwitterUserModel
-@{
+﻿@{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Агрегатор микроблогов";
 }
-@Model.Name
-<table>
-    @foreach (var tweet in Model.feed)
-    {
-        <td>
-        <tr>
-            @tweet.AuthorScreenName
-        </tr>
 
-        <tr>
-            <img src="@tweet.AuthorProfileImageUrl" />
-        </tr>
-        <tr>
-            @Html.Raw(tweet.TextAsHtml)
 
-        </tr>
-        <tr>
-            <img src="@tweet.Image" />
-        </tr>
-        </td>
-    }
-</table>
+    
+

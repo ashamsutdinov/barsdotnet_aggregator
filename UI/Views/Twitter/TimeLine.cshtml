@@ -1,0 +1,31 @@
+﻿@model UI.Models.TwitterUserModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table>
+    @foreach (var tweet in Model.feed)
+    {
+        <tr>
+            <td>
+                <img src="@tweet.AuthorProfileImageUrl" />
+            </td>
+
+            <td>
+                <font size="5" face="Arial">
+                    @tweet.AuthorScreenName<br />
+                    @Html.Raw(tweet.TextAsHtml)<br />
+                </font>
+                @if (!tweet.Image.Equals(""))
+                {
+                    <img src="@tweet.Image" width="50%" />
+                    <br />
+                }
+                <br />
+            </td>
+
+        </tr>
+    }
+</table>
+
+
+

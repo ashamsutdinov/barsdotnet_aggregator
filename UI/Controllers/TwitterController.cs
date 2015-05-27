@@ -36,7 +36,7 @@ namespace MvcSample.Controllers
             Session["access_token"] = accessToken.Token;
             Session["access_secret"] = accessToken.TokenSecret;
 
-            return TimeLine(user.ScreenName);
+            return Redirect("/Twitter/TimeLine?id="+user.ScreenName);
             //return Content(string.Format("Your username is {0}", user.ScreenName));
         }
 
@@ -46,7 +46,7 @@ namespace MvcSample.Controllers
             service.AuthenticateWith(Session["access_token"].ToString(), Session["access_secret"].ToString());
             var result = service.ListTweetsOnHomeTimeline(new ListTweetsOnHomeTimelineOptions()
             {
-                Count = 10,
+                Count = 100,
             });
 
             TwitterUserModel model = new TwitterUserModel();
@@ -76,7 +76,7 @@ namespace MvcSample.Controllers
 
                 model.feed.Add(tweet);
             }
-            return View("~/Views/Home/Index.cshtml", model);
+            return View("~/Views/Twitter/TimeLine.cshtml",model);
             //return Content(s);//Json(result, JsonRequestBehavior.AllowGet);
         }
     }

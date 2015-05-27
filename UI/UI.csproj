@@ -3169,7 +3169,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ControllerBase\" />
-    <Folder Include="Views\Twitter\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -3216,6 +3215,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Twitter\TimeLine.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
