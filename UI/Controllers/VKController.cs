@@ -130,7 +130,7 @@ namespace UI.Controllers
         public class VKServerResponse
         {
             public string access_token;
-            public int expires_in;
+            private object expires_in;
             public string user_id;
         }
 
@@ -160,15 +160,45 @@ namespace UI.Controllers
             public string uid;
             public string first_name;
             public string last_name;
-            public string photo_100;
+            public string photo_50;
             public bool online;
             public string user_id;
         }
 
+        public class VK_wall_response
+        {
+            public List<Record> response { get; set; }
+        }
+        public class Record
+        {
+            public string id {get; set;}
+            public string from_id {get; set;}
+            public string to_id {get; set;}
+            public string date {get; set;} 
+            public string post_type {get; set;}
+            public string text {get; set;}
+            public Attachment attachment{get; set;}
+           /* private object attachments;
+            private List<Count> comments { get; set; }
+            private List<Count> likes { get; set; }
+            private List<Count> reposts { get; set; }*/
+        }
+        public class Attachment
+        {
+            public Photo photo;
+        }
+        public class Photo
+        {
+            public string src { get; set; }
+        }
+        public class Count
+        {
+            public int count;
+        }
         public ActionResult Wall_information(string id)
         {
             //get all friends
-            WebRequest req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/friends.get?user_id={0}&fields=photo_100&access_token={1}", id, Session["vk_access_token"]));
+            WebRequest req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/friends.get?user_id={0}&fields=photo_50&access_token={1}", id, Session["vk_access_token"]));
 
             var response = req.GetResponse();
             string data;
@@ -178,16 +208,16 @@ namespace UI.Controllers
             }
             var friendsIdList = (FriendsIdList)JsonConvert.DeserializeObject(data, typeof(FriendsIdList));
             List<String> friendsId = new List<string>();
-            int i = 0;
-
+            
+            
             //get friends' wall
+            /*
             data = "";
-            foreach (var r in friendsIdList.response)
-            {
+            
                 //        friendsId.Add(r.user_id);
                 //   }
 
-                req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/wall.get?owner_id={0}&count=10&access_token={1}", r.user_id, Session["vk_access_token"]));
+                req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/wall.get?owner_id={0}&filter=owner,others&access_token={1}", r.user_id, Session["vk_access_token"]));
 
                 response = req.GetResponse();
 
@@ -197,7 +227,47 @@ namespace UI.Controllers
                 }
 
             }
-            return Content(data);
+          * */
+            string s = "";
+            int i = 0;
+            foreach (var friend in friendsIdList.response)
+            {
+                req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/wall.get?owner_id={0}&filter=owner&order=hints&count=10&access_token={1}", friend.user_id, Session["vk_access_token"]));
+
+                response = req.GetResponse();
+                data = "";
+                using (var sr = new StreamReader(response.GetResponseStream()))
+                {
+                    data = sr.ReadToEnd();
+                }
+                int begin = data.IndexOf(',');
+                data = data.Substring(begin + 1, data.Length - 3 - begin);
+                //response==list of records
+                data = "{response:[" + data + "]}";
+                try
+                {
+                    VK_wall_response result = JsonConvert.DeserializeObject<VK_wall_response>(data);
+                
+                foreach (var r in result.response)
+                {
+                    s += "<br>" +"<img src=\""+ friend.photo_50 + "\">" + r.text + "</br>";
+                    if (r.attachment != null)
+                        if (r.attachment.photo != null)
+                            if (!r.attachment.photo.src.Equals(""))
+                                s +=  "<img src=\"" + r.attachment.photo.src + "\"></br>";
+                }
+              //  if (i > 30)
+                //    break;
+                i++;
+                System.Threading.Thread.Sleep(50);
+                }
+                catch
+                {
+
+                }
+            }
+
+            return Content(s);
         }
         public ActionResult Audio(string id)
         {
