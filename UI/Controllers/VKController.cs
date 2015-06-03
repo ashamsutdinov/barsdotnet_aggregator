@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Net;
 using Newtonsoft.Json;
 using System.IO;
-
+using UI.Models;
 namespace UI.Controllers
 {
     public class VKController : Controller
@@ -171,17 +171,17 @@ namespace UI.Controllers
         }
         public class Record
         {
-            public string id {get; set;}
-            public string from_id {get; set;}
-            public string to_id {get; set;}
-            public string date {get; set;} 
-            public string post_type {get; set;}
-            public string text {get; set;}
-            public Attachment attachment{get; set;}
-           /* private object attachments;
-            private List<Count> comments { get; set; }
-            private List<Count> likes { get; set; }
-            private List<Count> reposts { get; set; }*/
+            public string id { get; set; }
+            public string from_id { get; set; }
+            public string to_id { get; set; }
+            public string date { get; set; }
+            public string post_type { get; set; }
+            public string text { get; set; }
+            public Attachment attachment { get; set; }
+            /* private object attachments;
+             private List<Count> comments { get; set; }
+             private List<Count> likes { get; set; }
+             private List<Count> reposts { get; set; }*/
         }
         public class Attachment
         {
@@ -198,6 +198,7 @@ namespace UI.Controllers
         public ActionResult Wall_information(string id)
         {
             //get all friends
+            
             WebRequest req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/friends.get?user_id={0}&fields=photo_50&access_token={1}", id, Session["vk_access_token"]));
 
             var response = req.GetResponse();
@@ -207,29 +208,14 @@ namespace UI.Controllers
                 data = sr.ReadToEnd();
             }
             var friendsIdList = (FriendsIdList)JsonConvert.DeserializeObject(data, typeof(FriendsIdList));
-            List<String> friendsId = new List<string>();
-            
             
             //get friends' wall
-            /*
-            data = "";
+
+            VKUserModel model = new VKUserModel();
+            model.Name = "Test";
+            model.feed = new System.Collections.Generic.List<VKUserModel.Tweet>();
             
-                //        friendsId.Add(r.user_id);
-                //   }
-
-                req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/wall.get?owner_id={0}&filter=owner,others&access_token={1}", r.user_id, Session["vk_access_token"]));
-
-                response = req.GetResponse();
-
-                using (var sr = new StreamReader(response.GetResponseStream()))
-                {
-                    data += sr.ReadToEnd();
-                }
-
-            }
-          * */
-            string s = "";
-            int i = 0;
+            
             foreach (var friend in friendsIdList.response)
             {
                 req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/wall.get?owner_id={0}&filter=owner&order=hints&count=10&access_token={1}", friend.user_id, Session["vk_access_token"]));
@@ -247,19 +233,25 @@ namespace UI.Controllers
                 try
                 {
                     VK_wall_response result = JsonConvert.DeserializeObject<VK_wall_response>(data);
-                
-                foreach (var r in result.response)
-                {
-                    s += "<br>" +"<img src=\""+ friend.photo_50 + "\">" + r.text + "</br>";
-                    if (r.attachment != null)
-                        if (r.attachment.photo != null)
-                            if (!r.attachment.photo.src.Equals(""))
-                                s +=  "<img src=\"" + r.attachment.photo.src + "\"></br>";
-                }
-              //  if (i > 30)
-                //    break;
-                i++;
-                System.Threading.Thread.Sleep(50);
+
+                    foreach (var r in result.response)
+                    {
+                        VKUserModel.Tweet tweet = new VKUserModel.Tweet();
+                        tweet.AuthorScreenName = friend.first_name+" "+friend.last_name;
+                        tweet.AuthorProfileImageUrl = friend.photo_50;
+                        
+                        tweet.TextAsHtml = "<br>" + r.text + "</br>";
+                        string s = "";
+                        if (r.attachment != null)
+                            if (r.attachment.photo != null)
+                                if (!r.attachment.photo.src.Equals(""))
+                                    s = r.attachment.photo.src;
+                         tweet.Image = s;
+
+                        model.feed.Add(tweet);
+                    }
+
+                    System.Threading.Thread.Sleep(50);
                 }
                 catch
                 {
@@ -267,13 +259,12 @@ namespace UI.Controllers
                 }
             }
 
-            return Content(s);
+            return View("~/Views/VK/TimeLine.cshtml", model);
         }
         public ActionResult Audio(string id)
         {
             WebRequest req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/audio.get?owner_id={0}&access_token={1}", id, Session["vk_access_token"]));
-            // WebRequest req = HttpWebRequest.Create(String.Format("https://api.vk.com/method/wall.get?access_token={0}", VK_access_token));
-
+            
             var response = req.GetResponse();
             string data;
             using (var sr = new StreamReader(response.GetResponseStream()))

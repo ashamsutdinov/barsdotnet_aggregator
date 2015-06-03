@@ -3171,7 +3171,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ControllerBase\" />
-    <Folder Include="Views\VK\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -3221,6 +3220,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Twitter\TimeLine.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\VK\TimeLine.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

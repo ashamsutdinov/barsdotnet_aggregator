@@ -37,7 +37,6 @@ namespace MvcSample.Controllers
             Session["access_secret"] = accessToken.TokenSecret;
 
             return Redirect("/Twitter/TimeLine?id="+user.ScreenName);
-            //return Content(string.Format("Your username is {0}", user.ScreenName));
         }
 
         public ActionResult TimeLine(string id)
@@ -54,30 +53,23 @@ namespace MvcSample.Controllers
             model.feed = new System.Collections.Generic.List<TwitterUserModel.Tweet>();
             
 
-            string s = "";
             foreach (var r in result)
             {
                 TwitterUserModel.Tweet tweet = new TwitterUserModel.Tweet();
                 tweet.AuthorScreenName = r.Author.ScreenName;
                 tweet.AuthorProfileImageUrl = r.Author.ProfileImageUrl;
                 tweet.TextAsHtml = r.TextAsHtml;
-
-                /*    s += "<br>" +
-                        "<img src=\"" + r.Author.ProfileImageUrl + "\" width=\"50\" height=\"50\">"
-                        + r.Author.ScreenName + ":   " + r.TextAsHtml + "</br>";
-                */
                 string images = "";
                 foreach (var m in r.Entities.Media)
                 {
                     images += m.MediaUrl;
                 }
                 tweet.Image = images;
-                //  s += images;
-
+                
                 model.feed.Add(tweet);
             }
+
             return View("~/Views/Twitter/TimeLine.cshtml",model);
-            //return Content(s);//Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
