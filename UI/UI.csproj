@@ -151,6 +151,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MicroblogUserModel.cs" />
+    <Compile Include="Models\Tweet.cs" />
     <Compile Include="Models\TwitterUserModel.cs" />
     <Compile Include="Models\VKUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

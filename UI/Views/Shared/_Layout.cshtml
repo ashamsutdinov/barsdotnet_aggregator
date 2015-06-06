@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="/Scripts/extjs/resources/css/ext-all.css" rel="stylesheet" />
-    <link href="/Content/Site.css" rel="stylesheet"/>
+    <link href="/Content/Site.css" rel="stylesheet" />
     @Styles.Render("~/css/site")
     @Scripts.Render("~/js/modernizr")
 </head>
 <body>
-     
+
     <table border="1" class="main">
         <tbody>
             <tr>
@@ -54,7 +54,10 @@
                 </td>
             </tr>
             <tr>
-                <td class="news">news</td>
+                <td class="news">
+                    <input type="button" class="button" value="Twitter" onclick="location.href = '/Twitter/Timeline?id=KZakiev'"  width="100%"/></br>
+                    <input type="button" class="button" value="VK" onclick="location.href = '/VK/Wall_information'" width="100%" /></br>
+                </td>
                 <td class="text">@RenderBody()</td>
             </tr>
             <tr>
@@ -64,7 +67,9 @@
         </tbody>
     </table>
 
+
     @Scripts.Render("~/js/extjs")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

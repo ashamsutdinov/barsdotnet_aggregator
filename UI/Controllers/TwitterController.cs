@@ -50,15 +50,15 @@ namespace MvcSample.Controllers
 
             TwitterUserModel model = new TwitterUserModel();
             model.Name = "Test";
-            model.feed = new System.Collections.Generic.List<TwitterUserModel.Tweet>();
             
-
             foreach (var r in result)
             {
-                TwitterUserModel.Tweet tweet = new TwitterUserModel.Tweet();
+                Tweet tweet = new Tweet();
                 tweet.AuthorScreenName = r.Author.ScreenName;
                 tweet.AuthorProfileImageUrl = r.Author.ProfileImageUrl;
                 tweet.TextAsHtml = r.TextAsHtml;
+                DateTime date = new DateTime(r.CreatedDate.Year, r.CreatedDate.Month, r.CreatedDate.Day, r.CreatedDate.Hour, r.CreatedDate.Minute, r.CreatedDate.Second, r.CreatedDate.Millisecond);
+                tweet.dateUnix = ((date.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString();
                 string images = "";
                 foreach (var m in r.Entities.Media)
                 {
@@ -66,7 +66,7 @@ namespace MvcSample.Controllers
                 }
                 tweet.Image = images;
                 
-                model.feed.Add(tweet);
+                model.feed.Add(tweet.dateUnix, tweet);
             }
 
             return View("~/Views/Twitter/TimeLine.cshtml",model);

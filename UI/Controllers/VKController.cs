@@ -189,7 +189,7 @@ namespace UI.Controllers
         }
         public class Photo
         {
-            public string src { get; set; }
+            public string src_big { get; set; }
         }
         public class Count
         {
@@ -213,8 +213,6 @@ namespace UI.Controllers
 
             VKUserModel model = new VKUserModel();
             model.Name = "Test";
-            model.feed = new System.Collections.Generic.List<VKUserModel.Tweet>();
-            
             
             foreach (var friend in friendsIdList.response)
             {
@@ -236,19 +234,22 @@ namespace UI.Controllers
 
                     foreach (var r in result.response)
                     {
-                        VKUserModel.Tweet tweet = new VKUserModel.Tweet();
+                        Tweet tweet = new Tweet();
                         tweet.AuthorScreenName = friend.first_name+" "+friend.last_name;
                         tweet.AuthorProfileImageUrl = friend.photo_50;
+                        tweet.dateUnix = r.date;
                         
                         tweet.TextAsHtml = "<br>" + r.text + "</br>";
                         string s = "";
                         if (r.attachment != null)
                             if (r.attachment.photo != null)
-                                if (!r.attachment.photo.src.Equals(""))
-                                    s = r.attachment.photo.src;
-                         tweet.Image = s;
+                                if (!r.attachment.photo.src_big.Equals(""))
+                                    s = r.attachment.photo.src_big;
+                        tweet.Image = s;
 
-                        model.feed.Add(tweet);
+                        model.feed.Add(tweet.dateUnix,tweet);
+                        if (model.feed.Count == 100)
+                            break;
                     }
 
                     System.Threading.Thread.Sleep(50);
