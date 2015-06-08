@@ -1,4 +1,4 @@
-﻿
+﻿ 
 @{
     ViewBag.Title = "Регистрация";
     Layout = "~/Views/Shared/_SignInLayout.cshtml";
@@ -40,19 +40,9 @@
                     fieldLabel: 'Ваш e-mail',
                     name: 'e-mail',
                     vtype: 'email'
-                }, {
-                    xtype: 'label',
-                    text: 'Какие микроблоги будем отслеживать?'
-                }, {
-                    xtype: 'checkbox',
-                    boxLabel: 'Twitter',
-                    name: 'twit',
-                    checked:true
-                }, {
-                    xtype: 'checkbox',
-                    boxLabel: 'rss',
-                    name: 'rss'
-                }],
+                }
+                
+                ],
 
                 buttons: [{
                     text: 'Зарегистрироваться',
