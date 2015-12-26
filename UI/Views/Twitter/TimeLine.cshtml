@@ -1,6 +1,7 @@
 ﻿@model UI.Models.TwitterUserModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Twitter feed";
 }
 <table>
     @foreach (var tweet in Model.feed.Values)

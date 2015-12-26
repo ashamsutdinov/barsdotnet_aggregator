@@ -1,6 +1,7 @@
 ﻿@model UI.Models.VKUserModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "VK feed";
 }
 <table>
     @foreach (var tweet in Model.feed.Values)

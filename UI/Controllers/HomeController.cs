@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Aggregator.Contracts;
+using UI.Models;
 
 namespace UI.Controllers
 {
@@ -19,6 +20,13 @@ namespace UI.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
+        {
+            return Json(new {message = "form submitted", model, success=true});
+           // return Redirect("/");
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -29,5 +37,6 @@ namespace UI.Controllers
             ViewBag.Text = "qwerty";
             return View();
         }
+        
     }
 }

@@ -5,8 +5,7 @@ using NHibernate.Linq;
 
 namespace Aggregator.Dal
 {
-    public class Dao<TKey, TDomainEntity> : 
-        IDisposable
+    public class Dao<TKey, TDomainEntity> : IDisposable
     {
         private readonly ISession _dbSession;
 
