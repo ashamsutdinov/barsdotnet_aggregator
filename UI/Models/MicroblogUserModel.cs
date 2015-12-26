@@ -12,7 +12,7 @@ namespace UI.Models
         {
             // use the default comparer to do the original comparison for strings
             int ascendingResult = Comparer<String>.Default.Compare(x, y);
-
+            
             // turn the result around
             return 0 - ascendingResult;
         }

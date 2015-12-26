@@ -17,6 +17,7 @@ namespace UI.Controllers
         }
         public ActionResult Login()
         {
+            ViewBag.Text = "textt";
             return View();
         }
 

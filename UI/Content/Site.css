@@ -59,8 +59,8 @@ table.main {
 	border-collapse: collapse;
 }
 td.top {
-	background-image: url(top_bg.jpg);
-	height: 165px;
+	/*background-image: url(top_bg.jpg);*/
+	height: 50px;
 }
 td.logo {
 	width: 100%;
