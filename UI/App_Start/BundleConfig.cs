@@ -10,7 +10,7 @@ namespace UI
             bundles.Add(new ScriptBundle("~/js/modernizr").Include("~/Scripts/modernizr-*"));
             bundles.Add(new ScriptBundle("~/js/extjs").Include("~/Scripts/extjs/ext-all-debug-w-comments.js"));
 
-            bundles.Add(new StyleBundle("~/css/site").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/css/site").Include("~/Content/Site.css"));
         }
     }
 }
