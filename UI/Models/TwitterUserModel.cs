@@ -5,8 +5,7 @@ using System.Web;
 
 namespace UI.Models
 {
-    public class TwitterUserModel
-        : MicroblogUserModel
+    public class TwitterUserModel : MicroblogUserModel
     {
         
     }
